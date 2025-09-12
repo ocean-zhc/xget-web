@@ -1,0 +1,34 @@
+{
+  "name": "xget-web",
+  "version": "1.0.0",
+  "description": "Xget URL 转换器 - 部署到 Cloudflare Workers",
+  "main": "worker.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:production": "wrangler deploy --env production",
+    "tail": "wrangler tail",
+    "preview": "wrangler dev --local",
+    "build": "echo 'No build step required for this project'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "xget",
+    "url-converter",
+    "cloudflare-workers",
+    "acceleration",
+    "github",
+    "gitlab",
+    "npm",
+    "pypi"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

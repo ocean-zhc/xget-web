@@ -1,0 +1,263 @@
+# Xget Web 部署到 Cloudflare Workers 指南
+
+## 📋 部署前准备
+
+### 1. 环境要求
+- Node.js 16+ 
+- npm 或 yarn
+- Cloudflare 账户
+
+### 2. 安装依赖
+```bash
+# 安装项目依赖
+npm install
+
+# 全局安装 Wrangler CLI（如果还没有）
+npm install -g wrangler
+```
+
+### 3. 登录 Cloudflare
+```bash
+wrangler login
+```
+
+## 🚀 部署步骤
+
+### 方法一：一键部署（推荐）
+```bash
+# 部署到生产环境
+npm run deploy
+
+# 或者部署到测试环境
+npm run deploy:staging
+```
+
+### 方法二：使用 Wrangler 命令
+```bash
+# 开发环境预览
+wrangler dev
+
+# 部署到生产环境
+wrangler deploy
+
+# 部署到指定环境
+wrangler deploy --env production
+```
+
+## ⚙️ 配置说明
+
+### wrangler.toml 配置
+```toml
+name = "xget-web"                    # Worker 名称
+main = "worker.js"                   # 入口文件
+compatibility_date = "2024-01-01"    # 兼容性日期
+
+[env.production]
+name = "xget-web-prod"               # 生产环境名称
+
+[env.staging]
+name = "xget-web-staging"            # 测试环境名称
+```
+
+### 自定义配置
+如需修改配置，请编辑 `wrangler.toml` 文件：
+
+1. **修改 Worker 名称**：
+   ```toml
+   name = "your-custom-name"
+   ```
+
+2. **添加环境变量**：
+   ```toml
+   [vars]
+   ENVIRONMENT = "production"
+   ```
+
+3. **绑定自定义域名**：
+   ```toml
+   [[routes]]
+   pattern = "your-domain.com/*"
+   zone_name = "your-domain.com"
+   ```
+
+## 🌐 访问部署的应用
+
+部署成功后，您的应用将在以下地址可用：
+
+- **默认域名**：`https://xget-web.your-subdomain.workers.dev`
+- **生产环境**：`https://xget-web-prod.your-subdomain.workers.dev`
+- **测试环境**：`https://xget-web-staging.your-subdomain.workers.dev`
+
+## 🔧 本地开发
+
+### 启动开发服务器
+```bash
+# 启动本地开发服务器
+npm run dev
+
+# 或使用 wrangler 直接启动
+wrangler dev
+```
+
+访问 `http://localhost:8787` 查看本地版本。
+
+### 实时日志查看
+```bash
+# 查看生产环境日志
+npm run tail
+
+# 或使用 wrangler 命令
+wrangler tail
+```
+
+## 📁 项目结构
+
+```
+xget-web/
+├── worker.js              # Cloudflare Workers 入口文件
+├── wrangler.toml          # Wrangler 配置文件
+├── package.json           # 项目配置
+├── src/
+│   ├── handler.js         # 请求处理器
+│   └── static-files.js    # 静态文件内容
+├── index.html             # 原始 HTML 文件（参考用）
+├── style.css              # 原始 CSS 文件（参考用）
+├── script.js              # 原始 JS 文件（参考用）
+└── deploy.md              # 部署说明文档
+```
+
+## 🛠️ 高级配置
+
+### 1. 添加自定义域名
+
+在 Cloudflare 控制台中：
+1. 进入 Workers & Pages
+2. 选择您的 Worker
+3. 点击 "Custom domains"
+4. 添加您的域名
+
+或在 `wrangler.toml` 中配置：
+```toml
+[[routes]]
+pattern = "your-domain.com/*"
+zone_name = "your-domain.com"
+```
+
+### 2. 环境变量配置
+
+在 Cloudflare 控制台中设置环境变量，或在 `wrangler.toml` 中配置：
+```toml
+[vars]
+XGET_BASE_URL = "https://xxx.xxxx.fun"
+ENVIRONMENT = "production"
+```
+
+### 3. 缓存配置
+
+默认已配置适当的缓存策略：
+- HTML: 1小时缓存
+- CSS/JS: 24小时缓存
+- 静态资源: 长期缓存
+
+## 🔍 故障排除
+
+### 常见问题
+
+1. **部署失败**
+   ```bash
+   # 检查 Wrangler 版本
+   wrangler --version
+   
+   # 重新登录
+   wrangler logout
+   wrangler login
+   ```
+
+2. **域名访问问题**
+   - 确认域名已正确配置
+   - 检查 DNS 设置
+   - 等待 DNS 传播（最多24小时）
+
+3. **静态文件加载问题**
+   - 检查 `src/static-files.js` 中的文件内容
+   - 确认文件路径正确
+
+### 调试命令
+
+```bash
+# 查看 Worker 详细信息
+wrangler whoami
+
+# 查看部署状态
+wrangler deployments list
+
+# 查看实时日志
+wrangler tail --format pretty
+```
+
+## 📊 性能优化
+
+### 1. 缓存策略
+- 静态资源使用长期缓存
+- HTML 使用短期缓存以便更新
+- 利用 Cloudflare 边缘缓存
+
+### 2. 压缩优化
+- CSS/JS 已经过优化
+- 启用 Gzip 压缩
+- 使用 Cloudflare 的自动压缩
+
+### 3. 全球分发
+- 利用 Cloudflare 的全球 CDN
+- 边缘计算降低延迟
+- 自动故障转移
+
+## 🔒 安全配置
+
+默认已配置的安全头：
+- `X-Content-Type-Options: nosniff`
+- `X-Frame-Options: DENY`
+- `X-XSS-Protection: 1; mode=block`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+
+## 📈 监控和分析
+
+### Cloudflare Analytics
+在 Cloudflare 控制台中查看：
+- 请求数量和响应时间
+- 错误率和状态码分布
+- 地理位置分析
+- 缓存命中率
+
+### 自定义监控
+可以添加自定义指标：
+```javascript
+// 在 worker.js 中添加
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+  
+  // 记录自定义指标
+  event.waitUntil(
+    logMetrics(event.request)
+  );
+});
+```
+
+## 🎯 下一步
+
+1. **自定义样式**：修改 `src/static-files.js` 中的 CSS
+2. **添加功能**：扩展 JavaScript 功能
+3. **集成分析**：添加 Google Analytics 或其他分析工具
+4. **SEO 优化**：添加 meta 标签和结构化数据
+5. **PWA 支持**：添加 Service Worker 和 manifest.json
+
+## 📞 支持
+
+如果遇到问题：
+1. 查看 [Cloudflare Workers 文档](https://developers.cloudflare.com/workers/)
+2. 检查 [Wrangler CLI 文档](https://developers.cloudflare.com/workers/wrangler/)
+3. 查看项目的 GitHub Issues
+
+---
+
+🎉 **恭喜！您的 Xget URL 转换器现在已经部署到 Cloudflare Workers 上了！**

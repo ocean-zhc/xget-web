@@ -1,0 +1,17 @@
+name = "xget-web"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# 子域名配置
+workers_dev = false
+route = { pattern = "xxxx.domain.com", custom_domain = true }
+
+[env.production]
+name = "xget-web"
+# 生产环境子域名配置
+route = { pattern = "xxxx.domain.com", custom_domain = true }
+
+[env.staging]
+name = "xget-web-staging"
+# 测试环境子域名配置
+route = { pattern = "staging.xxx.domain.com", custom_domain = true }
