@@ -160,10 +160,25 @@ files['index.html'] = `<!DOCTYPE html>
     <footer class="footer">
         <div class="footer-content">
             <p class="footer-main">
-                由 <a href="#" class="footer-link">Xget</a> 提供支持
+                由 <a href="https://github.com/912988434/xget-web" 
+                target="_blank"
+                rel="noopener noreferrer"
+                class="footer-link"
+                >
+                xget-web
+                </a> 
+                提供web页面支持
             </p>
             <p class="footer-sub">
-                开源项目基于 Xget,让网络加速更简单
+                开源项目基于 
+                <a href="https://github.com/xixu-me/Xget" 
+                target="_blank"
+                rel="noopener noreferrer"
+                class="footer-link"
+                >
+                Xget
+                </a> 
+                ,让网络加速更简单
             </p>
         </div>
     </footer>
