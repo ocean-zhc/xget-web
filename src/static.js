@@ -542,7 +542,7 @@ function convertUrl(originalUrl) {
                 const platform = platforms[domain];
                 const path = urlObj.pathname + urlObj.search + urlObj.hash;
                 const cleanPath = path.replace(/^\\//, '');
-                return 'https://xget.lishuai.fun/' + platform.prefix + '/' + cleanPath;
+                return BASE_URL + '/' + platform.prefix + '/' + cleanPath;
             }
         }
         throw new Error('不支持的平台');
@@ -660,6 +660,6 @@ document.addEventListener('DOMContentLoaded', function() {
     handleInput();
 });`;
 
-export function getStaticFile(filename) {
+export function getStaticFile(filename, env) {
     return files[filename] || null;
 }

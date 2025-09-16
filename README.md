@@ -22,26 +22,45 @@ wrangler login
 ```
 
 ## 🚀 部署步骤
+### 修改配置
+> [!CAUTION]
+>
+> **部署到不同环境需要修改对应的wrangler.toml文件中的不同环境的配置，请根据需要选择并修改**
+
+
+主要是修改 route 中地址 和 BASE_URL
+
+
 
 ### 方法一：一键部署（推荐）
 ```bash
-# 部署到生产环境
+
+# 部署到默认环境,使用wrangler.toml文件中顶层配置
 npm run deploy
 
-# 或者部署到测试环境
+# 部署到dev环境，使用wrangler.toml文件中dev配置
+npm run deploy:dev
+
+# 部署到生产环境，使用wrangler.toml文件中production配置
+npm run deploy:production
+
+# 或者部署到测试环境,用wrangler.toml文件中staging配置
 npm run deploy:staging
 ```
 
 ### 方法二：使用 Wrangler 命令
 ```bash
-# 开发环境预览
-wrangler dev
+# 部署到默认环境,使用wrangler.toml文件中顶层配置
+wrangler deploy 或者 wrangler deploy --env ""
 
-# 部署到生产环境
-wrangler deploy
+# 部署到dev环境，使用wrangler.toml文件中dev配置
+wrangler deploy --env dev
 
-# 部署到指定环境
+# 部署到production环境，使用wrangler.toml文件中production配置
 wrangler deploy --env production
+
+# 或者部署到staging环境,用wrangler.toml文件中staging配置
+wrangler deploy --env staging
 ```
 
 ## ⚙️ 配置说明
@@ -75,18 +94,12 @@ name = "xget-web-staging"            # 测试环境名称
 
 3. **绑定自定义域名**：
    ```toml
-   [[routes]]
-   pattern = "your-domain.com/*"
-   zone_name = "your-domain.com"
+   route = { pattern = "xxx.domian.com", custom_domain = true }
    ```
 
 ## 🌐 访问部署的应用
 
-部署成功后，您的应用将在以下地址可用：
-
-- **默认域名**：`https://xget-web.your-subdomain.workers.dev`
-- **生产环境**：`https://xget-web-prod.your-subdomain.workers.dev`
-- **测试环境**：`https://xget-web-staging.your-subdomain.workers.dev`
+部署成功后，可以通过route中定义的域名访问
 
 ## 🔧 本地开发
 
@@ -119,11 +132,8 @@ xget-web/
 ├── package.json           # 项目配置
 ├── src/
 │   ├── handler.js         # 请求处理器
-│   └── static-files.js    # 静态文件内容
-├── index.html             # 原始 HTML 文件（参考用）
-├── style.css              # 原始 CSS 文件（参考用）
-├── script.js              # 原始 JS 文件（参考用）
-└── deploy.md              # 部署说明文档
+│   └── static.js          # 静态文件内容
+└── README.md              # 部署说明文档
 ```
 
 ## 🛠️ 高级配置
@@ -138,21 +148,12 @@ xget-web/
 
 或在 `wrangler.toml` 中配置：
 ```toml
-[[routes]]
-pattern = "your-domain.com/*"
-zone_name = "your-domain.com"
+route = { pattern = "xxxx.domain.com", custom_domain = true }
 ```
 
-### 2. 环境变量配置
 
-在 Cloudflare 控制台中设置环境变量，或在 `wrangler.toml` 中配置：
-```toml
-[vars]
-XGET_BASE_URL = "https://xxx.xxxx.fun"
-ENVIRONMENT = "production"
-```
 
-### 3. 缓存配置
+### 2. 缓存配置
 
 默认已配置适当的缓存策略：
 - HTML: 1小时缓存

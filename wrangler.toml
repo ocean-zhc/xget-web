@@ -2,16 +2,39 @@ name = "xget-web"
 main = "worker.js"
 compatibility_date = "2024-01-01"
 
-# 子域名配置
+#顶层配置
 workers_dev = false
-route = { pattern = "xxxx.domain.com", custom_domain = true }
+#域名配置,修改为你自己的域名
+route = { pattern = "proxy.domain.com", custom_domain = true }
+[vars]
+#修改为你的xget服务地址
+BASE_URL = "https://xget.domain.com"
 
+
+[env.dev.vars]
+#修改为你的xget服务地址
+BASE_URL = "https://xget.domain.com"
+
+[env.dev]
+name = "xget-web-dev"
+# dev环境域名配置,修改为你自己的域名
+route = { pattern = "xget-dev.domain.com", custom_domain = true }
+
+
+#production环境配置
+[env.production.vars]
+#修改为你的xget服务地址
+BASE_URL = "https://xget.domain.com"
 [env.production]
 name = "xget-web"
-# 生产环境子域名配置
-route = { pattern = "xxxx.domain.com", custom_domain = true }
+# 生产环境子域名配置,修改为你自己的域名
+route = { pattern = "xget-web.domain.com", custom_domain = true }
 
+#staging环境配置
+[env.staging.vars]
+#修改为你的xget服务地址
+BASE_URL = "https://xget.domain.com"
 [env.staging]
 name = "xget-web-staging"
-# 测试环境子域名配置
-route = { pattern = "staging.xxx.domain.com", custom_domain = true }
+# staging环境子域名配置，修改为你自己的域名
+route = { pattern = "staging.xget-web.domain.com", custom_domain = true }
