@@ -6,6 +6,7 @@
 - Node.js 16+ 
 - npm 或 yarn
 - Cloudflare 账户
+- 提前部署好[xget](https://github.com/xixu-me/Xget)服务
 
 ### 2. 安装依赖
 ```bash
