@@ -3,6 +3,8 @@ main = "worker.js"
 compatibility_date = "2024-01-01"
 
 #顶层配置
+
+# 是否启用workers.dev域名
 workers_dev = false
 #域名配置,修改为你自己的域名
 route = { pattern = "proxy.domain.com", custom_domain = true }

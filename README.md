@@ -6,30 +6,36 @@
 - Node.js 16+ 
 - npm 或 yarn
 - Cloudflare 账户
-- 提前部署好[xget](https://github.com/xixu-me/Xget)服务
+- 提前部署好[**xget**](https://github.com/xixu-me/Xget)服务
 
-### 2. 安装依赖
-```bash
-# 安装项目依赖
-npm install
-
-# 全局安装 Wrangler CLI（如果还没有）
-npm install -g wrangler
-```
-
-### 3. 登录 Cloudflare
-```bash
-wrangler login
-```
 
 ## 🚀 部署步骤
-### 修改配置
-> [!CAUTION]
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/912988434/xget-web.git)
+
+1. **注册 Cloudflare 账户**：访问 [Cloudflare Workers](https://workers.cloudflare.com/) 并注册账户
+
+2. **安装 Wrangler CLI**：
+
+   ```bash
+   npm install -g wrangler
+   wrangler login
+   ```
+
+3. **克隆项目**：
+
+   ```bash
+   git clone https://github.com/912988434/xget-web.git
+   cd xget-web
+   npm install
+   ```
+4、**修改配置**
+> [!IMPORTANT]
 >
 > **部署到不同环境需要修改对应的wrangler.toml文件中的不同环境的配置，请根据需要选择并修改**
 
 
 主要是修改 route 中地址 和 BASE_URL
+
 
 
 
@@ -63,6 +69,14 @@ wrangler deploy --env production
 # 或者部署到staging环境,用wrangler.toml文件中staging配置
 wrangler deploy --env staging
 ```
+
+## 🌐 访问部署的应用
+
+部署成功后，可以通过两种地址访问
+- route中定义的域名
+workers.dev域名：
+- Worker 域名：`your-worker-name.your-subdomain.workers.dev`
+
 
 ## ⚙️ 配置说明
 
@@ -98,9 +112,6 @@ name = "xget-web-staging"            # 测试环境名称
    route = { pattern = "xxx.domian.com", custom_domain = true }
    ```
 
-## 🌐 访问部署的应用
-
-部署成功后，可以通过route中定义的域名访问
 
 ## 🔧 本地开发
 
