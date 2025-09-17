@@ -1,4 +1,6 @@
-# Xget Web 部署到 Cloudflare Workers 指南
+# xget-Web 部署到 Cloudflare Workers 指南
+
+[xget-web](https://github.com/912988434/xget-web.git)是[**xget**](https://github.com/xixu-me/Xget)服务的的url转换的WEB UI ，可以省去自己手动根据规则生成加速url，实现输入url后自动转换为加速地址
 
 ## 📋 部署前准备
 
