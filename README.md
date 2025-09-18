@@ -12,7 +12,7 @@
 
 
 ## 🚀 部署步骤
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/912988434/xget-web.git)
+
 
 1. **注册 Cloudflare 账户**：访问 [Cloudflare Workers](https://workers.cloudflare.com/) 并注册账户
 
